@@ -1,0 +1,727 @@
+{
+	"info": {
+		"name": "bitstock-api tests [env]",
+		"_postman_id": "61f9cf6e-c30b-8013-1268-972461851a05",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LOGIN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"try {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    postman.setEnvironmentVariable(\"token\", jsonData.token);",
+							"    postman.setEnvironmentVariable(\"username\", jsonData.username);",
+							"} catch (err) {",
+							"    console.log(err);",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTMxMTEzMzgsInVzZXJuYW1lIjoidGVzdDAwQHRlc3QuY29tIiwiZGlzcGxheU5hbWUiOiJ0ZXN0MDBAdGVzdC5jb20iLCJtYWlsIjoidGVzdDAwQHRlc3QuY29tIiwianRpIjoiOGEyNzI0OGItMzVkMy00MGNkLTk4MjMtYzMwZDRhNmQxMWMxIiwic2NvcGVzIjpbImJhc2ljIl19.cYDvpxWnQ7ixI74EsPxhyFnNL45iKmZXG-5BFWY7d54"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"test04@test.com\",\n\t\"password\":\"test00\",\n\t\"expirationMinutes\": 525600\n}"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/token",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"token"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "api /accounts?username custom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"try {",
+							"    var jsonData = JSON.parse(responseBody)[0];",
+							"    postman.setEnvironmentVariable(\"assetAddress\", jsonData.asset_address);",
+							"    postman.setEnvironmentVariable(\"accountId\", jsonData.id);",
+							"} catch (err) {",
+							"    console.log(err);",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{bitstock-api-host}}/accounts?username={{username}}",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"equals": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "api /accounts post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"username\", jsonData.username);",
+							"postman.setEnvironmentVariable(\"activationToken\", jsonData.activationToken);",
+							"postman.setEnvironmentVariable(\"assetAddress\", jsonData.assetAddress);",
+							"postman.setEnvironmentVariable(\"accountId\", jsonData.accountId);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable(\"newUsername\", 'test' + Math.round(Math.random()*99999999));",
+							"",
+							"// postman.setEnvironmentVariable(\"newUsername\", 'test05');",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{bitstock-token-admin}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Teste {{newUsername}}\",\n  \"mail\": \"{{newUsername}}@test.com\",\n  \"username\": \"{{newUsername}}@test.com\",\n  \"displayName\": \"{{newUsername}}@test.com\",\n  \"password\": \"test11\"\n}"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/accounts",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"accounts"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "/users/[username]/activate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 202\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{activationToken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{bitstock-api-host}}/users/{{username}}/activate",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"users",
+						"{{username}}",
+						"activate"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "api /token post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Status code is 461 - password reset required\", function () {",
+							"    pm.response.to.have.status(461);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"{{username}}\",\n\t\"password\":\"test11\"\n}"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/token",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"token"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "api /users/[username]/change-password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\":\"test00\",\n\t\"old_password\":\"test11\"\n}\n"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/users/{{username}}/change-password",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"users",
+						"{{username}}",
+						"change-password"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "api /token post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"{{username}}\",\n\t\"password\":\"test00\"\n}"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/token",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"token"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "api /info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"{{username}}\",\n\t\"password\":\"test00\"\n}"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/info",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"info"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "api /accounts?username=test00@test.com",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{bitstock-api-host}}/accounts?username={{username}}",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"equals": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "/assets/reserves BTC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{bitstock-token-admin}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"asset\":\"BTC\", \n  \"value\": 10\n}"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/assets/reserves",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"assets",
+						"reserves"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "POST /assets/[address]/deposit BTC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{bitstock-token-admin}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"asset\":\"BTC\", \n  \"value\": 10\n}"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/assets/{{assetAddress}}/deposit",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"assets",
+						"{{assetAddress}}",
+						"deposit"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "/assets/reserves BRL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{bitstock-token-admin}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"asset\":\"BRL\", \n  \"value\": 100000\n}"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/assets/reserves",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"assets",
+						"reserves"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "POST /assets/[address]/deposit BRL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{bitstock-token-admin}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"asset\":\"BRL\", \n  \"value\": 100000\n}"
+				},
+				"url": {
+					"raw": "{{bitstock-api-host}}/assets/{{assetAddress}}/deposit",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"assets",
+						"{{assetAddress}}",
+						"deposit"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "/accounts/:account_id/balance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{bitstock-api-host}}/accounts/{{accountId}}/balance",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"accounts",
+						"{{accountId}}",
+						"balance"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "/accounts/:account_id/transactions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{bitstock-api-host}}/accounts/{{accountId}}/transactions",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"accounts",
+						"{{accountId}}",
+						"transactions"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "api /health",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{bitstock-api-host}}/health",
+					"host": [
+						"{{bitstock-api-host}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		}
+	]
+}
