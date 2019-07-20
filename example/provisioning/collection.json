@@ -30,7 +30,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://www.google.com/?q=flaviostutz",
+					"raw": "{{google-url}}/?q=flaviostutz",
 					"protocol": "https",
 					"host": [
 						"www",
@@ -75,7 +75,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://www.google.com/?q=test",
+					"raw": "{{google-url}}/?q=test",
 					"protocol": "https",
 					"host": [
 						"www",

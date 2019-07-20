@@ -109,6 +109,8 @@ function getStatusCode(testStatus) {
         st = 580
     } else if(test.status == "error") {
         st = 500
+    } else if(test.status == "running") {
+        st = 202
     }
     return st;
 }

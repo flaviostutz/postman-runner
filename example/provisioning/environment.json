@@ -4,9 +4,9 @@
   "values": [
     {
       "enabled": true,
-      "key": "test-host",
+      "key": "google-url",
       "type": "text",
-      "value": "http://test"
+      "value": "http://www.google.com"
     }
   ],
   "timestamp": 1512309207513,
