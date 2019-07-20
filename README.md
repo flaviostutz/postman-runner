@@ -8,6 +8,8 @@ This container exposes some APIs for executing and verifying Postman collection 
 
 ## Usage
 
+* See a full example at /example
+
 * Create a new directory for the new container
 
 * Create a Postman collection with all the tests and verifications you wish to perform when running this container on the server
