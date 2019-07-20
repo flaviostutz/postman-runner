@@ -1,11 +1,8 @@
 var newman = require('newman');
 const fs = require('fs')
 
-var status = "idle"
-
-exports.getStatus = function() {
-  return status
-}
+exports.status = "idle"
+exports.lastMessage = ""
 
 // call newman.run to pass `options` object and wait for callback
 exports.runtests = function() {
@@ -26,10 +23,10 @@ exports.runtests = function() {
     }
 
     console.log('Launching tests...')
-    status = "running";
+    exports.status = "running";
     const r = newman.run({
       collection: require('/app/provisioning/collection.json'),
-      reporters: 'cli,json,htmlextra,junit,json-summary,emojitrain',
+      reporters: ['cli','json','htmlextra','junit','json-summary','emojitrain'],
       reporter: {
         'json': {
           export: '/app/reporter-json.json'
@@ -51,19 +48,21 @@ exports.runtests = function() {
     function (err, summary) {
       console.log('Tests finished');
       if (err || summary.error) {
-          console.error('Test failure. err=' + JSON.stringify(err) + '; summary.error=' + JSON.stringify(summary.error));
-          status = "error";
-          reject();
-        } else {
-        if(summary.run.failures.length>0) {
-          console.log(`Found ${summary.run.failures.length} test failures. Check log above.`);
-          status = "error";
-          reject();
-        } else {
-          console.log('All tests were successfull');
-          status = "success";
-          accept();
-        }
+        exports.lastMessage = 'Test failure. err=' + JSON.stringify(err) + '; summary.error=' + JSON.stringify(summary.error)
+        console.error(exports.lastMessage);
+        exports.status = "error";
+        reject(exports.lastMessage);
+      } else if(summary.run.failures.length>0) {
+        exports.lastMessage = `Found ${summary.run.failures.length}/${summary.run.executions.length} test failures. Check logs.`
+        console.error(exports.lastMessage);
+        exports.status = "failed";
+        reject(exports.lastMessage);
+      } else {
+        exports.lastMessage = `All tests were successfull (${summary.run.executions.length})`;
+        console.error(exports.lastMessage);
+        console.log('All tests were successfull');
+        exports.status = "success";
+        accept(exports.lastMessage);
       }
     });
   });
@@ -71,13 +70,8 @@ exports.runtests = function() {
 
 exports.run = async function() {
   try {
-    await runtests();
-    process.exit(0);
+    await exports.runtests();
   } catch (err) {
     console.log('FAILURE. ERR=' + err);
-    process.exit(1);
   }
 }
-
-// run();
-

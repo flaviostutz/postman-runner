@@ -1,4 +1,5 @@
-from node:8.6.0
+# FROM node:8.6.0
+FROM node:12.6.0
 
 ENV BACKTOR_API_URL ''
 ENV CONDUCTOR_API_URL ''
@@ -9,10 +10,13 @@ WORKDIR /app/
 ADD package.json /app/
 RUN npm install
 
-ENV RUN_ON_STARTUP 'true'
+ENV RUN_ON_STARTUP 'false'
 ENV RUN_API_SERVER 'true'
 
+ADD startup.sh /
+
 ADD . /app/
+ADD /provisioning /provisioning
 
 EXPOSE 2000
 CMD ["/startup.sh"]

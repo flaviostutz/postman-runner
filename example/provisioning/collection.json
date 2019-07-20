@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "4c09bc23-6c86-f12c-2bdd-a3c41853fd88",
+		"name": "test google",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://www.google.com/?q=flaviostutz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5d6ba33-b5ba-44f8-b32c-fd487dd1c14f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Has text 'flaviostutz'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"abracadabra\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.google.com/?q=flaviostutz",
+					"protocol": "https",
+					"host": [
+						"www",
+						"google",
+						"com"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "flaviostutz"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://www.google.com/?q=test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5d6ba33-b5ba-44f8-b32c-fd487dd1c14f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Has text 'test'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"test\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.google.com/?q=test",
+					"protocol": "https",
+					"host": [
+						"www",
+						"google",
+						"com"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
