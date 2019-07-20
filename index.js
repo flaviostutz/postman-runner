@@ -17,18 +17,27 @@ app.post('/test',async function(req,res) {
     }
     console.log("Running tests...")
     if (req.query.wait) {
-        await test.run()
-        if(test.status=="success") {
-            res.status(200).send(test.lastMessage + ' check "/results" for details')
-        } else if(test.status=="failed") {
-            res.status(580).send(test.lastMessage + ' check "/results" for details')
-        } else {
-            res.status(500).send(test.lastMessage)
+        try {
+            await test.runtests();
+            if(test.status=="success") {
+                res.status(200).send(test.lastMessage + ' check "/results" for details')
+            } else if(test.status=="failed") {
+                res.status(580).send(test.lastMessage + ' check "/results" for details')
+            } else {
+                res.status(500).send(test.lastMessage)
+            }
+        } catch (err) {
+            console.log('FAILURE. ERR=' + err);
+            res.status(500).send(err)
         }
     } else {
         console.log("Running tests assynchronously...")
-        test.run()
-        res.status(202).send('Tests started in background. Check results at "/results". To wait for results, use POST "/test?wait=1"')
+        try {
+            exports.runtests();
+            res.status(202).send('Tests started in background. Check results at "/results". To wait for results, use POST "/test?wait=1"')
+        } catch (err) {
+            console.log('FAILURE. ERR=' + err);
+        }
     }
 })
 

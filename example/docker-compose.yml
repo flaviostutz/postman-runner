@@ -9,4 +9,5 @@ services:
     environment:
       - LOG_LEVEL=debug
       - RUN_ON_STARTUP=true
+      - RUN_API_SERVER=false
 

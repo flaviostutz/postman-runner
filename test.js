@@ -25,7 +25,7 @@ exports.runtests = function() {
     console.log('Launching tests...')
     exports.status = "running";
     const r = newman.run({
-      collection: require('/app/provisioning/collection.json'),
+      collection: require('/provisioning/collection.json'),
       reporters: ['cli','json','htmlextra','junit','json-summary','emojitrain'],
       reporter: {
         'json': {
@@ -41,7 +41,7 @@ exports.runtests = function() {
           jsonSummaryExport: '/app/reporter-json-summary.json'
         }
       },
-      environment: require('/app/provisioning/environment.json'),
+      environment: require('/provisioning/environment.json'),
       abortOnError: false,
       abortOnFailure: false
     },
@@ -66,12 +66,4 @@ exports.runtests = function() {
       }
     });
   });
-}
-
-exports.run = async function() {
-  try {
-    await exports.runtests();
-  } catch (err) {
-    console.log('FAILURE. ERR=' + err);
-  }
 }
