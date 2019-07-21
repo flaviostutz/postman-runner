@@ -5,6 +5,10 @@ if [ ! -f /provisioning/collection.json ]; then
     exit 1 
 fi
 
+envsubst < /provisioning/collection.json > /provisioning/collection.json
+envsubst < /provisioning/environment.json > /provisioning/environment.json
+
+
 RE=1
 if [ "$RUN_ON_STARTUP" == "true" ]; then
     echo "Launching tests..."

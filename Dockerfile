@@ -1,6 +1,8 @@
 # FROM node:8.6.0
 FROM node:12.6.0
 
+RUN apt-get update && apt-get install -y gettext
+
 ENV BACKTOR_API_URL ''
 ENV CONDUCTOR_API_URL ''
 

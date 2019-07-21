@@ -52,6 +52,10 @@ services:
 * RUN_ON_STARTUP - whetever to run Postman scripts during container startup. defaults to false
 * RUN_API_SERVER - whetever to run a REST API server for accepting requests like GET /results, POST /test etc. defaults to true
 
+* All ENVs set to your container will be used to replace references in files /provisioning/environment.json and /provisioning/collection.json
+
+  * For example, if you use "value": "${GOOGLE_URL}" in environment.json and you have the "GOOGLE_URL=http://google.com" set as a ENV of your container, during startup it will become "value": "http://google.com"
+
 ## API
 
 * POST /test
