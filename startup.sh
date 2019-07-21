@@ -8,6 +8,9 @@ fi
 envsubst < /provisioning/collection.json > /provisioning/collection.json
 envsubst < /provisioning/environment.json > /provisioning/environment.json
 
+if [ -f /pre.sh ]; then
+    /pre.sh
+fi
 
 RE=1
 if [ "$RUN_ON_STARTUP" == "true" ]; then

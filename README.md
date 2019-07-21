@@ -58,6 +58,10 @@ services:
 
   * For example, if you use "value": "${GOOGLE_URL}" in environment.json and you have the "GOOGLE_URL=http://google.com" set as a ENV of your container, during startup it will become "value": "http://google.com"
 
+## Startup scripts
+
+* During startup, if there is a /pre.sh script file, it will be executed. This is optional.
+
 ## API
 
 * POST /test
