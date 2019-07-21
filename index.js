@@ -5,7 +5,7 @@ var fs = require('fs')
 var app = express();
 
 app.get('/',function(req,res) {
-    res.send('POST /test - run tests;\nGET /test - view last test results');
+    res.redirect('/results')
 });
 
 app.post('/test',async function(req,res) {

@@ -8,6 +8,9 @@ fi
 envsubst < /provisioning/collection.json > /provisioning/collection.json
 envsubst < /provisioning/environment.json > /provisioning/environment.json
 
+echo "/provisioning/environment.json"
+cat /provisioning/environment.json
+
 if [ -f /pre.sh ]; then
     /pre.sh
 fi
