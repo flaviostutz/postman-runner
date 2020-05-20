@@ -55,9 +55,9 @@ services:
 
 * RUN_API_SERVER - whetever to run a REST API server for accepting requests like GET /results, POST /test etc. defaults to true. Set this to false if you wish the container to run, launch test scripts and exit with zero exit code if tests PASSED and not zero if FAILED.
 
-* WAIT_URL_CONNECT - wait for a successful connect to the URL before starting tests
+* WAIT_CONNECT_HOST + WAIT_CONNECT_PORT- wait for a successful tcp connection to host:port before starting tests
 
-* WAIT_TIME_SECONDS - time to wait before launching tests
+* WAIT_TIME_SECONDS - time to wait before launching tests (after tcp connect, if defined)
 
 * All ENVs set to your container will be used to replace references in files /provisioning/environment.json and /provisioning/collection.json
 
