@@ -17,6 +17,19 @@ fi
 
 RE=1
 if [ "$RUN_ON_STARTUP" == "true" ]; then
+
+    if [ "$WAIT_CONNECT_URL" != "" ]; then
+        echo "Waiting for a successful connection to $WAIT_CONNECT_URL before proceding..."
+        until $(curl --output /dev/null --silent --head --fail $WAIT_CONNECT_URL); do
+            sleep 1
+        done
+    fi
+
+    if [ "$WAIT_TIME_SECONDS" != "" ]; then
+        echo "Waiting $WAIT_TIME_SECONDS seconds before launching tests..."
+        sleep $WAIT_TIME_SECONDS
+    fi
+
     echo "Launching tests..."
     node /app/run.js
     RE=$?

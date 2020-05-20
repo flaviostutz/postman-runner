@@ -8,8 +8,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "fs": "0.0.1-security",
-    "newman": "^4.5.1",
-    "newman-reporter-htmlextra": "^1.8.5",
-    "newman-reporter-json-summary": "^1.0.9"
+    "newman": "^4.6.1",
+    "newman-reporter-htmlextra": "^1.15.2",
+    "newman-reporter-json-summary": "^1.0.14"
   }
 }

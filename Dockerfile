@@ -14,6 +14,8 @@ RUN npm install
 
 ENV RUN_ON_STARTUP 'false'
 ENV RUN_API_SERVER 'true'
+ENV WAIT_TIME_SECONDS '1'
+ENV WAIT_CONNECT_URL ''
 
 ADD startup.sh /
 
