@@ -21,11 +21,18 @@ fi
 RE=1
 if [ "$RUN_ON_STARTUP" == "true" ]; then
 
-    if [ "$WAIT_CONNECT_URL" != "" ]; then
-        echo "Waiting for a successful connection to $WAIT_CONNECT_URL before proceding..."
-        until $(curl --output /dev/null --silent --head --fail $WAIT_CONNECT_URL); do
-            sleep 1
-        done
+    if [ "$WAIT_CONNECT_HOST" != "" ]; then
+        if [ "$WAIT_CONNECT_PORT" == "" ]; then
+            echo "WAIT_CONNECT_PORT must be defined"
+            exit 1
+        fi
+        echo "Waiting for a successful tcp connection to $WAIT_CONNECT_HOST:$WAIT_CONNECT_PORT before proceding..."
+        # until $(curl --output /dev/null --silent --get --fail $WAIT_CONNECT_URL); do
+        #     sleep 1
+        # done
+        while ! nc -z $WAIT_CONNECT_HOST $WAIT_CONNECT_PORT; do   
+            sleep 0.3
+        done        
     fi
 
     if [ "$WAIT_TIME_SECONDS" != "" ]; then

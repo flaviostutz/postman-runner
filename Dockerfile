@@ -1,7 +1,7 @@
 # FROM node:8.6.0
 FROM node:12.6.0
 
-RUN apt-get update && apt-get install -y gettext
+RUN apt-get update && apt-get install -y gettext netcat
 
 WORKDIR /app/
 
