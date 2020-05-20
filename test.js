@@ -6,6 +6,11 @@ exports.lastMessage = ""
 
 // call newman.run to pass `options` object and wait for callback
 exports.runtests = function() {
+
+  a = require('/provisioning/collection.json')
+  console.log("OPEN COLLECTION")
+  console.log(a)
+
   return new Promise(function(accept, reject) {
 
     console.log('Removing previous result files...')

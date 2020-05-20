@@ -3,9 +3,6 @@ FROM node:12.6.0
 
 RUN apt-get update && apt-get install -y gettext
 
-ENV BACKTOR_API_URL ''
-ENV CONDUCTOR_API_URL ''
-
 WORKDIR /app/
 
 #Optimize building time. Cache npm install on this layer so that it is cached between code updates.

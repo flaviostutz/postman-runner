@@ -5,8 +5,11 @@ if [ ! -f /provisioning/collection.json ]; then
     exit 1 
 fi
 
-envsubst < /provisioning/collection.json > /provisioning/collection.json
-envsubst < /provisioning/environment.json > /provisioning/environment.json
+envsubst < /provisioning/collection.json > /tmp/collection.json
+cp /tmp/collection.json /provisioning/collection.json
+
+envsubst < /provisioning/environment.json > /tmp/environment.json
+cp /tmp/environment.json /provisioning/environment.json
 
 echo "/provisioning/environment.json"
 cat /provisioning/environment.json
