@@ -22,7 +22,7 @@ This container exposes some APIs for executing and verifying Postman collection 
 
 ```
 FROM flaviostutz/postman-runner
-ADD /provisioning /
+ADD /provisioning /provisioning
 ```
 
 * Create docker-compose.yml
