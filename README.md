@@ -52,7 +52,7 @@ services:
 ## ENVs
 
 * RUN_ON_STARTUP - whetever to run Postman scripts during container startup. defaults to false
-* RUN_API_SERVER - whetever to run a REST API server for accepting requests like GET /results, POST /test etc. defaults to true
+* RUN_API_SERVER - whetever to run a REST API server for accepting requests like GET /results, POST /test etc. defaults to true. Set this to false if you wish the container to run, launch test scripts and exit with zero exit code if tests PASSED and not zero if FAILED.
 
 * All ENVs set to your container will be used to replace references in files /provisioning/environment.json and /provisioning/collection.json
 
