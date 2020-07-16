@@ -1,4 +1,8 @@
 # postman-runner
+
+[<img src="https://img.shields.io/docker/pulls/flaviostutz/postman-runner"/>](https://hub.docker.com/r/flaviostutz/postman-runner)
+[<img src="https://img.shields.io/docker/automated/flaviostutz/postman-runner"/>](https://hub.docker.com/r/flaviostutz/postman-runner)
+
 This container can be extended for running Postman requests and validations for creating integration tests in CI environments.
 
 Instead of using other API test methods, by using Postman collections, you can use the same script you use during development to be run on the server during CI executions.
