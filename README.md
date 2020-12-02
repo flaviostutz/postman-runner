@@ -9,6 +9,10 @@ Instead of using other API test methods, by using Postman collections, you can u
 
 This container exposes some APIs for executing and verifying Postman collection scripts. Extend this container, add your Postman script to /provisioning/collection.json, build the container and start it up!
 
+You can also see a step-by-step tutorial on the link below in Portuguese (você pode também ver um tutorial no link abaixo em português):
+https://rfsaraujobr.medium.com/postman-runner-testes-atrav%C3%A9s-de-containers-d339d70207a1
+
+
 
 ## Usage
 
